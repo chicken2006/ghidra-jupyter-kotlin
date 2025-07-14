@@ -20,12 +20,15 @@ plugins {
 }
 
 
-compileKotlin {
-	kotlinOptions.jvmTarget = "21"
-}
-
-kotlin {
-	jvmToolchain(21)
+// ADD THIS BLOCK. It will run AFTER the Ghidra script and override its settings.
+project.afterEvaluate {
+    tasks.withType(JavaCompile).configureEach {
+        sourceCompatibility = JavaVersion.VERSION_24
+        targetCompatibility = JavaVersion.VERSION_24
+    }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions.jvmTarget = "24"
+    }
 }
 
 configurations {
@@ -60,7 +63,7 @@ else {
 //----------------------END "DO NOT MODIFY" SECTION-------------------------------
 
 dependencies {
-	api('org.jetbrains.kotlinx:kotlin-jupyter-kernel:0.12.0-356'){
+	api('org.jetbrains.kotlinx:kotlin-jupyter-kernel:0.14.1-533-1'){
 //		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 	// Needed for compiling

@@ -27,6 +27,8 @@ class KotlinCompilerMessageCollector(private val sourceFile: ResourceFile) : Mes
             CompilerMessageSeverity.INFO -> Msg.info(this, message)
             CompilerMessageSeverity.LOGGING -> Msg.debug(this, message)
             CompilerMessageSeverity.OUTPUT -> Msg.out(message)
+            // ADD THIS ELSE BRANCH TO FIX THE ERROR
+            else -> Msg.info(this, "[$severity] $message")
         }
     }
 }
